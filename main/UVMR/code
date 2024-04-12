@@ -1,0 +1,46 @@
+###################
+UVMR for the effect of mental well-being on healthy aging
+###################
+library(MVMR)
+library(TwoSampleMR)
+library(MendelianRandomization)
+library(data.table)
+library(readr)
+###################
+mydata <- read_excel('wellbeing_gip.xlsx') 
+res <- mr(mydata)
+het <- mr_heterogeneity(mydata)
+pleio <- mr_pleiotropy_test(mydata)
+presso <- mr_presso(BetaOutcome = "beta.outcome", BetaExposure = "beta.exposure", 
+                    SdOutcome = "se.outcome", SdExposure = "se.exposure", 
+                    OUTLIERtest = TRUE, DISTORTIONtest = TRUE, data =mydata, 
+                    NbDistribution = 2000,SignifThreshold = 0.05)
+
+
+
+
+
+###################
+UVMR for the effect of SES on mental well-being
+###################
+library(MVMR)
+library(TwoSampleMR)
+library(MendelianRandomization)
+library(data.table)
+library(readr)
+###################
+mydata <- read_excel('SES_wellbeing_mydata.xlsx')
+res <- mr(mydata)
+het <- mr_heterogeneity(mydata)
+pleio <- mr_pleiotropy_test(mydata)
+presso <- mr_presso(BetaOutcome = "beta.outcome", BetaExposure = "beta.exposure", 
+                    SdOutcome = "se.outcome", SdExposure = "se.exposure", 
+                    OUTLIERtest = TRUE, DISTORTIONtest = TRUE, data =mydata, 
+                    NbDistribution = 2000,SignifThreshold = 0.05)
+
+
+
+
+
+
+

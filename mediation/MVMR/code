@@ -1,0 +1,23 @@
+##############################
+MVMR for the effect of each mediator on the aging-GIP adjusting for the well-being spectrum
+##############################
+library(MVMR)
+library(TwoSampleMR)
+library(MendelianRandomization)
+library(data.table)
+library(readr)
+##############################
+exposure_dat<- read_excel ("mvmr_mediator_GIP_wellbeing.xlsx")
+MRMVInputObject <- mr_mvinput(bx = cbind(exposure_dat$'beta.med',exposure_dat$'beta.swb'), 
+                              bxse = cbind(exposure_dat$'se.med',exposure_dat$'se.swb'), 
+                              by = exposure_dat$'beta.gip', byse =exposure_dat$'se.gip')
+MV-IVW <- mr_mvivw(MRMVInputObject,
+                        model = "default",
+                        correl = FALSE,
+                        distribution = "normal",
+                        alpha = 0.05)
+MVEGGER <- mr_mvegger(MRMVInputObject, 
+                           orientate = 1,
+                           correl = FALSE,
+                           distribution = "normal", 
+                           alpha = 0.05)

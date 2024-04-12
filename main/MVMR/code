@@ -1,0 +1,54 @@
+###################
+MVMR for the effect of SES on mental well-being
+###################
+library(MVMR)
+library(TwoSampleMR)
+library(MRPRESSO)
+library(MendelianRandomization)
+library(data.table)
+library(readr)
+###################
+exposure_dat<- read_excel ("mvmr_SES_wellbeing.xlsx")
+MRMVInputObject <- mr_mvinput(bx = cbind(exposure_dat$'beta.edu',exposure_dat$'beta.oa',exposure_dat$'beta.income'), 
+                              bxse = cbind(exposure_dat$'se.edu',exposure_dat$'se.oa',exposure_dat$'se.income'), 
+                              by = exposure_dat$'beta.well', byse =exposure_dat$'se.well')
+MV-IVW <- mr_mvivw(MRMVInputObject,
+                        model = "default",
+                        correl = FALSE,
+                        distribution = "normal",
+                        alpha = 0.05)
+MVEGGER <- mr_mvegger(MRMVInputObject, 
+                           orientate = 1,
+                           correl = FALSE,
+                           distribution = "normal", 
+                           alpha = 0.05)
+
+
+
+
+###################
+MVMR for the effect of mental well-being on healthy aging adjusting for SES
+###################
+library(MVMR)
+library(TwoSampleMR)
+library(MRPRESSO)
+library(MendelianRandomization)
+library(data.table)
+library(readr)
+###################
+exposure_dat<- read_excel ("mvmr_wellbeing_gip_SES.xlsx")
+MRMVInputObject <- mr_mvinput(bx = cbind(exposure_dat$'beta.ses',exposure_dat$'beta.swb'), 
+                              bxse = cbind(exposure_dat$'se.ses',exposure_dat$'se.swb'), 
+                              by = exposure_dat$'beta.gip', byse =exposure_dat$'se.gip')
+MV-IVW <- mr_mvivw(MRMVInputObject,
+                        model = "default",
+                        correl = FALSE,
+                        distribution = "normal",
+                        alpha = 0.05)
+MVEGGER <- mr_mvegger(MRMVInputObject, 
+                           orientate = 1,
+                           correl = FALSE,
+                           distribution = "normal", 
+                           alpha = 0.05)
+
+

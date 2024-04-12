@@ -1,0 +1,26 @@
+########################
+UVMR for the effect of the well-being spectrum on each mediator
+########################
+library(MVMR)
+library(TwoSampleMR)
+library(MRPRESSO)
+library(MendelianRandomization)
+library(data.table)
+library(readr)
+########################
+ukb-a-5/ieu-b-24/ieu-b-142/ukb-b-1489/ukb-b-3881/finn-b-RX_ANTIHYP/finn-b-RX_PARACETAMOL_NSAID/ebi-a-GCST006572/ieu-a-1095/ieu-a-73/ebi-a-GCST002216/ebi-a-GCST002223/ebi-a-GCST90000025/ieu-b-30/ieu-a-7/ieu-a-798/finn-b-C_STROKE/ebi-a-GCST009541/ebi-a-GCST006414/finn-b-I9_ANGINA/finn-b-I9_UAP/finn-b-I9_CORATHER/finn-b-I9_ISCHHEART/finn-b-I9_REVASC/finn-b-I9_ANGIO/ieu-a-1126/ieu-a-1127/finn-b-M13_POLYARTHROPATHIES/ieu-a-1183/finn-b-I9_HYPTENSESS/ebi-a-GCST006867/finn-b-J10_ASTHMA/finn-b-J10_COPD
+
+swb<- readxl_excel ("mentaliv.xlsx")
+mediator <- extract_outcome_data(
+  snps=swb$SNP,
+  outcomes=c("中介ID"),
+  proxies = TRUE,
+  maf_threshold = 0.01,
+  access_token = NULL
+)
+mydata <- harmonise_data(
+  exposure_dat=swb,
+  outcome_dat= mediator,
+  action= 2
+)
+res <- mr(mydata)
